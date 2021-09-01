@@ -11,7 +11,7 @@ Resume::Resume(string name)
 Resume::Resume(const Resume& rhs)
 {
 	m_name = rhs.m_name;
-	m_sex = rhs.m_sex;
+	m_sex = rhs.m_sex;  
 	m_age = rhs.m_age;
 	m_work = new WorkExperience(*rhs.m_work);
 }
