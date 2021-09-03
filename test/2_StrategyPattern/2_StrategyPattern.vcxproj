@@ -24,6 +24,7 @@
     <ProjectGuid>{875d6234-b89d-43da-b308-0546fbd8df94}</ProjectGuid>
     <RootNamespace>My2StrategyPattern</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>02_StrategyPattern</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
