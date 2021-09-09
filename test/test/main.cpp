@@ -2,6 +2,7 @@
 #include <iostream>
 #include <functional>
 #include <vector>
+
 using namespace std;
 class IObj
 {
@@ -61,13 +62,7 @@ private:
 
 void main()
 {
-	DeleManager i_manager;
-	AppleObj i_apple;
-	BananaObj i_banana;
-	using std::placeholders::_1;
-	std::function<int(string)> i_dele_apple = std::bind(&AppleObj::callback, i_apple, _1);
-	i_manager.addObj(i_dele_apple);
-	std::function<int(string)> i_dele_banana = std::bind(&BananaObj::callback, i_banana, _1);
-	i_manager.addObj(i_dele_banana);
-	i_manager.notify("happy middle september day");
+	string a = "-0.12345";
+	cout << a.substr(2) << endl;
+	cout << atof(a.c_str()) << endl;
 }
