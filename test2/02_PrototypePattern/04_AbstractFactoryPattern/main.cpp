@@ -184,7 +184,202 @@ namespace _nmsp1
 
 }
 
+namespace _nmsp2
+{
+	class Body
+	{
+	public:
+		virtual ~Body() {};
+		virtual void GetName() = 0;
+	};
 
+	class Shoes
+	{
+	public:
+		virtual ~Shoes() {};
+		virtual void GetName() = 0;
+	};
+
+	class Clothes
+	{
+	public:
+		virtual ~Clothes() {};
+		virtual void GetName() = 0;
+	};
+
+	class ChinaBody :public Body
+	{
+	public:
+		void GetName() override
+		{
+			cout << "来自中国的身体" << endl;
+		}
+	};
+
+	class JapanBody :public Body
+	{
+	public:
+		void GetName() override
+		{
+			cout << "来自日本的身体" << endl;
+		}
+	};
+
+	class AmericaBody :public Body
+	{
+	public:
+		void GetName() override
+		{
+			cout << "来自美国的身体" << endl;
+		}
+	};
+
+	class ChinaShoes :public Shoes
+	{
+	public:
+		void GetName() override
+		{
+			cout << "来自中国的鞋子" << endl;
+		}
+	};
+
+	class JapanShoes :public Shoes
+	{
+	public:
+		void GetName() override
+		{
+			cout << "来自日本的鞋子" << endl;
+		}
+	};
+
+	class AmericaShoes :public Shoes
+	{
+	public:
+		void GetName() override
+		{
+			cout << "来自美国的鞋子" << endl;
+		}
+	};
+
+	class ChinaClothes :public Clothes
+	{
+	public:
+		void GetName() override
+		{
+			cout << "来自中国的衣服" << endl;
+		}
+	};
+
+	class JapanClothes :public Clothes
+	{
+	public:
+		void GetName() override
+		{
+			cout << "来自日本的衣服" << endl;
+		}
+	};
+
+	class AmericaClothes :public Clothes
+	{
+	public:
+		void GetName() override
+		{
+			cout << "来自美国的衣服" << endl;
+		}
+	};
+
+	class AbstractFactory
+	{
+	public:
+		virtual ~AbstractFactory() {}
+		virtual Body* CreateBody() = 0;
+		virtual Shoes* CreateShoes() = 0;
+		virtual Clothes* CreateClothes() = 0;
+	};
+
+	class ChinaFactory :public AbstractFactory
+	{
+	public:
+		Body* CreateBody() override
+		{
+			return new ChinaBody();
+		}
+
+		Shoes* CreateShoes() override
+		{
+			return new ChinaShoes();
+		}
+
+		Clothes* CreateClothes() override
+		{
+			return new ChinaClothes();
+		}
+	};
+
+	class JapanFactory :public AbstractFactory
+	{
+	public:
+		Body* CreateBody() override
+		{
+			return new JapanBody();
+		}
+
+		Shoes* CreateShoes() override
+		{
+			return new JapanShoes();
+		}
+
+		Clothes* CreateClothes() override
+		{
+			return new JapanClothes();
+		}
+	};
+
+	class AmericaFactory :public AbstractFactory
+	{
+	public:
+		Body* CreateBody() override
+		{
+			return new AmericaBody();
+		}
+
+		Shoes* CreateShoes() override
+		{
+			return new AmericaShoes();
+		}
+
+		Clothes* CreateClothes() override
+		{
+			return new AmericaClothes();
+		}
+	};
+
+	class BarbieDoll
+	{
+	public:
+		BarbieDoll(Body* body, Shoes* shoes, Clothes* clothes)
+			:m_body(body),
+			m_shoes(shoes),
+			m_clothes(clothes)
+		{
+
+		}
+
+		void Assemble()
+		{
+			cout << "成功组装娃娃" << endl;
+			m_body->GetName();
+			m_shoes->GetName();
+			m_clothes->GetName();
+		}
+
+	private:
+		Shoes* m_shoes;
+		Clothes* m_clothes;
+		Body* m_body;
+	};
+
+}
 
 
 int main()
@@ -250,7 +445,29 @@ int main()
 		  //但若增加新产品等级结构，需要修改抽象层代码，这是抽象工厂模式的缺点，所以，应避免在产品等级结构不稳定的情况下使用该模式。
 		  //也就是说，如果游戏中怪物种类（亡灵类，元素类，机械类）比较固定的情况下，更适合使用抽象工厂模式。
 	
-	_nmsp1::M_ParFactory* factorySwamp = new _nmsp1::M_Factory_Swamp();
+	//（3.2） 不同厂商生产不同部件范例
+	//芭比娃娃：身体（包括头、颈部、躯干、四肢）、衣服、鞋子
+	//中国，日本，美国 厂商
+	//要求：制作两个芭比娃娃，第一个：身体，衣服，鞋子，全部采用中国厂商制造的部件。
+							//第二个：身体采用中国厂商，衣服部件采用日本厂商，鞋子部件采用美国厂商。
+	//类的设计思路：
+	//a)将身体，衣服，鞋子 这三个部件实现为抽象类。
+	//b)实现一个抽象工厂，分别用来生产身体、衣服、鞋子这三个部件。
+	//c)针对不同厂商的每个部件实现具体的类以及每个厂商所代表的具体工厂。
+
+	//工厂方法模式和抽象工厂模式区别：
+	//a)工厂方法模式:一个工厂生产一个产品
+	//b)抽象工厂模式:一个工厂生产多个产品（产品族）
+
+	//抽象工厂模式的定义（实现意图）：提供一个接口（AbstractFactory），
+		   //让该接口负责创建一系列相关或者相互依赖的对象(Body,Clothes,Shoes)，而无需指定他们具体的类。
+
+	//三种工厂模式的总结：
+	//a)从代码实现复杂度：
+	//b)从需要的工厂数量上：
+	//c)从实际应用上：
+
+	/*_nmsp1::M_ParFactory* factorySwamp = new _nmsp1::M_Factory_Swamp();
 	_nmsp1::M_ParFactory* factoryMountain = new _nmsp1::M_Factory_Mountain();
 	_nmsp1::M_ParFactory* factoryTown = new _nmsp1::M_Factory_Town();
 
@@ -280,6 +497,46 @@ int main()
 
 	delete townUndead;
 	delete townElement;
-	delete townMechanic;
+	delete townMechanic;*/
 
+	_nmsp2::AbstractFactory* chinaFactory = new _nmsp2::ChinaFactory();
+	_nmsp2::AbstractFactory* japanFactory = new _nmsp2::JapanFactory();
+	_nmsp2::AbstractFactory* americaFactory = new _nmsp2::AmericaFactory();
+
+	_nmsp2::Body* chinaBody = chinaFactory->CreateBody();
+	_nmsp2::Shoes* chinaShoes = chinaFactory->CreateShoes();
+	_nmsp2::Clothes* chinaClothes = chinaFactory->CreateClothes();
+
+	_nmsp2::Body* japanBody = japanFactory->CreateBody();
+	_nmsp2::Shoes* japanShoes = japanFactory->CreateShoes();
+	_nmsp2::Clothes* japanClothes = japanFactory->CreateClothes();
+
+	_nmsp2::Body* americaBody = americaFactory->CreateBody();
+	_nmsp2::Shoes* americaShoes = americaFactory->CreateShoes();
+	_nmsp2::Clothes* americaClothes = americaFactory->CreateClothes();
+
+	_nmsp2::BarbieDoll* chinaDoll = new _nmsp2::BarbieDoll(chinaBody, chinaShoes, chinaClothes);
+	chinaDoll->Assemble();
+	_nmsp2::BarbieDoll* japanDoll = new _nmsp2::BarbieDoll(japanBody, japanShoes, japanClothes);
+	japanDoll->Assemble();
+	_nmsp2::BarbieDoll* americaDoll = new _nmsp2::BarbieDoll(americaBody, americaShoes, americaClothes);
+	americaDoll->Assemble();
+
+	delete chinaFactory;
+	delete chinaBody;
+	delete chinaShoes;
+	delete chinaClothes;
+	delete chinaDoll;
+
+	delete japanFactory;
+	delete japanBody;
+	delete japanShoes;
+	delete japanClothes;
+	delete japanDoll;
+
+	delete americaFactory;
+	delete americaBody;
+	delete americaShoes;
+	delete americaClothes;
+	delete americaDoll;
 }
